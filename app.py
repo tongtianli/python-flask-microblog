@@ -1,14 +1,18 @@
+import os
+
 from flask import Flask, render_template, request
-from jinja2 import Template
 import datetime
 from pymongo import MongoClient
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def create_app():
     app = Flask(__name__)
     app.db = MongoClient(
-        "mongodb+srv://user:KeOqF3YehmH2HAaa@micro-blog.sfnsg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+        os.environ.get("MONGODB_URL")
     ).blogDB
-
 
     @app.route("/", methods=['GET', 'POST'])
     def home():
